@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CP380_B2_BlockWebAPI.Models;
+using CP380_B1_BlockList.Models;
 
 namespace CP380_B2_BlockWebAPI.Controllers
 {
@@ -13,5 +15,25 @@ namespace CP380_B2_BlockWebAPI.Controllers
     public class PendingPayloadsController : ControllerBase
     {
         // TODO
+        private readonly PendingPayloads _pendingPayloads;
+        public List<PendingPayloads> pendingPayloadsList { get; set; }
+
+        public PendingPayloadsController(PendingPayloads pendingPayloads) {
+            _pendingPayloads = pendingPayloads;
+        }
+
+        [HttpGet("/PenidngPayloads")]
+        public ActionResult<List<Payload>> Get()
+        {
+            return _pendingPayloads.payloads.ToList();
+        }
+
+
+        [HttpPost("/PendingPayloads")]
+        public void Post(Payload payload)
+        {
+            _pendingPayloads.payloads.Add(payload);
+            
+        }
     }
 }
