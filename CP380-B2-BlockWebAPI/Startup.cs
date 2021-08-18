@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.IO;
+using CP380_B2_BlockWebAPI.Services;
 using CP380_B2_BlockWebAPI.Models;
 using CP380_B1_BlockList.Models;
 namespace CP380_B2_BlockWebAPI
@@ -32,6 +33,7 @@ namespace CP380_B2_BlockWebAPI
             // TODO:
             //  add singletons
             //  
+            services.AddSingleton<BlockListService>();
             services.AddSingleton<BlockList>();
             services.AddSingleton<BlockSummary>();
             services.AddSingleton<PendingPayloads>();

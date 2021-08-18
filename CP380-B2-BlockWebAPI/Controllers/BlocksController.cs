@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CP380_B1_BlockList.Models;
 using CP380_B2_BlockWebAPI.Models;
+using CP380_B2_BlockWebAPI.Services;
+
 
 namespace CP380_B2_BlockWebAPI.Controllers
 {
@@ -17,6 +19,7 @@ namespace CP380_B2_BlockWebAPI.Controllers
         // TODO
 
         private readonly BlockList _blockList;
+        public List<Payload> payloadList { get; set; }
 
         public BlocksController(BlockList blockList)
         {
@@ -57,12 +60,28 @@ namespace CP380_B2_BlockWebAPI.Controllers
         [HttpGet("/{hash}/Payloads")]
         public ActionResult<List<Payload>> GetPayload(string hash)
         {
-            
+
             var block = _blockList.Chain.Where(tempBlock => tempBlock.Hash == hash);
 
             return block.Select(tmpBlock => tmpBlock.Data).First();
-    }
+        }
 
+        [HttpPost]
+        public void Post(Block block)
+        {
+            payloadList = new PendingPayloads().payloads;
+            var tmpBlock = _blockList.Chain[_blockList.Chain.Count - 1];
+            var block1 = new Block(tmpBlock.TimeStamp, tmpBlock.PreviousHash, payloadList);
+            if (block1.CalculateHash() == block1.Hash)
+            {
+                _blockList.Chain.Add(block);
 
+            }
+            else
+            {
+                BadRequest();
+            }
+
+        }
     }
 }
