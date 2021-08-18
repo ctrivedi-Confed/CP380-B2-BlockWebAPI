@@ -22,14 +22,14 @@ namespace CP380_B2_BlockWebAPI.Controllers
             _pendingPayloads = pendingPayloads;
         }
 
-        [HttpGet("/PenidngPayloads")]
+        [HttpGet]
         public ActionResult<List<Payload>> Get()
         {
             return _pendingPayloads.payloads.ToList();
         }
 
 
-        [HttpPost("/PendingPayloads")]
+        [HttpPost]
         public void Post(Payload payload)
         {
             _pendingPayloads.payloads.Add(payload);

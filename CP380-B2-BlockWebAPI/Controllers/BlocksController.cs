@@ -24,7 +24,7 @@ namespace CP380_B2_BlockWebAPI.Controllers
         }
 
 
-        [HttpGet("/Blocks")]
+        [HttpGet]
         public ActionResult<List<BlockSummary>> Get()
         {
             List<Block> blocks = _blockList.Chain.ToList();
@@ -46,7 +46,7 @@ namespace CP380_B2_BlockWebAPI.Controllers
         }
 
 
-        [HttpGet("/Blocks/{hash}")]
+        [HttpGet("/{hash}")]
         public ActionResult<Block> Get(string hash)
         {
             var block = _blockList.Chain.Where(tempBlock => tempBlock.Hash == hash).First();
@@ -54,7 +54,7 @@ namespace CP380_B2_BlockWebAPI.Controllers
             return block.Hash.Length > 0 ? block : NotFound();
         }
 
-        [HttpGet("/Blocks/{hash}/Payloads")]
+        [HttpGet("/{hash}/Payloads")]
         public ActionResult<List<Payload>> GetPayload(string hash)
         {
             
