@@ -52,7 +52,10 @@ namespace CP380_B2_BlockWebAPI.Controllers
         [HttpGet("/{hash}")]
         public ActionResult<Block> Get(string hash)
         {
-            var block = _blockList.Chain.Where(tempBlock => tempBlock.Hash == hash).First();
+            var block = _blockList.Chain
+                .Where(tempBlock => tempBlock.Hash == hash)
+                .First();
+            
 
             return block.Hash.Length > 0 ? block : NotFound();
         }
@@ -69,10 +72,7 @@ namespace CP380_B2_BlockWebAPI.Controllers
         [HttpPost]
         public void Post(Block block)
         {
-            payloadList = new PendingPayloads().payloads;
-            var tmpBlock = _blockList.Chain[_blockList.Chain.Count - 1];
-            var block1 = new Block(tmpBlock.TimeStamp, tmpBlock.PreviousHash, payloadList);
-            if (block1.CalculateHash() == block1.Hash)
+            if (block.PreviousHash == _blockList.Chain[_blockList.Chain.Count-1].Hash)
             {
                 _blockList.Chain.Add(block);
 
@@ -81,6 +81,8 @@ namespace CP380_B2_BlockWebAPI.Controllers
             {
                 BadRequest();
             }
+
+            
 
         }
     }

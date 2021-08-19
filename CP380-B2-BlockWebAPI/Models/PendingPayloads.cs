@@ -15,5 +15,10 @@ namespace CP380_B2_BlockWebAPI.Models
         {
             payloads = new List<Payload>() { };
         }
+
+        internal void clearPayload()
+        {
+            payloads.Clear();
+        }
     }
 }

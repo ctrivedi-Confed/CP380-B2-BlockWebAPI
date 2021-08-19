@@ -29,11 +29,12 @@ namespace CP380_B2_BlockWebAPI.Services
         {
             payloadList = pendingPayloads.payloads;
             var tmpBlockList = blockList.Chain[blockList.Chain.Count - 1];
-            var block = new Block(tmpBlockList.TimeStamp, tmpBlockList.PreviousHash, payloadList);
+            var block = new Block(tmpBlockList.TimeStamp, tmpBlockList.Hash, payloadList);
             if(block.CalculateHash() == hash)
             {
+                
                 blockList.Chain.Add(block);
-                payloadList.Clear();
+                pendingPayloads.clearPayload();
                 return block;
             }
             else
